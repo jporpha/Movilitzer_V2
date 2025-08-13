@@ -1,4 +1,4 @@
-package com.jp.orpha.movilitzer_v2.Movilitzer_V2;
+package com.jp.orpha.movilitzer_v2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
