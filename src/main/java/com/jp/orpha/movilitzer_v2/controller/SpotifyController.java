@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Spotify", description = "Integración con Spotify (Plan A)")
 @RestController
@@ -24,16 +25,24 @@ public class SpotifyController {
 
     private final SpotifyService spotifyService;
 
-    @Operation(summary = "Iniciar autorización OAuth para un venue")
+    @Operation(summary = "Obtener URL de autorización OAuth para un venue (copiar y abrir en el navegador)")
     @GetMapping("/{venueId}/authorize")
-    public ResponseEntity<Void> authorize(@PathVariable("venueId") Long venueId){
+    public ResponseEntity<Map<String, String>> authorize(@PathVariable("venueId") Long venueId) {
+        String url = spotifyService.buildAuthorizationUrl(venueId);
+        return ResponseEntity.ok(Map.of("authorizationUrl", url));
+    }
+
+    @Operation(summary = "Iniciar autorización OAuth (redirige a Spotify)")
+    @GetMapping("/{venueId}/authorize/redirect")
+    public ResponseEntity<Void> authorizeRedirect(@PathVariable("venueId") Long venueId) {
         String url = spotifyService.buildAuthorizationUrl(venueId);
         return ResponseEntity.status(302).location(URI.create(url)).build();
     }
 
     @Operation(summary = "Callback de OAuth (configurar redirect-uri en Spotify)")
     @GetMapping("/callback")
-    public ResponseEntity<String> callback(@RequestParam Long venueId, @RequestParam String code){
+    public ResponseEntity<String> callback(@RequestParam("venueId") Long venueId,
+                                           @RequestParam("code") String code){
         spotifyService.handleCallback(venueId, code);
         return ResponseEntity.ok("Conexión Spotify OK para venue " + venueId);
     }
