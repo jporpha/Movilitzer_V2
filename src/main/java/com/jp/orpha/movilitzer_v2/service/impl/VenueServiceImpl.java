@@ -1,9 +1,9 @@
-package com.movilitzer.v2.service.impl;
+package com.jp.orpha.movilitzer_v2.service.impl;
 
-import com.movilitzer.v2.entity.Venue;
-import com.movilitzer.v2.exception.BadRequestException;
-import com.movilitzer.v2.repository.VenueRepository;
-import com.movilitzer.v2.service.VenueService;
+import com.jp.orpha.movilitzer_v2.entity.Venue;
+import com.jp.orpha.movilitzer_v2.exception.BadRequestException;
+import com.jp.orpha.movilitzer_v2.repository.VenueRepository;
+import com.jp.orpha.movilitzer_v2.service.VenueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

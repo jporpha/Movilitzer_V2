@@ -1,12 +1,18 @@
-package com.movilitzer.v2.service.impl;
+package com.jp.orpha.movilitzer_v2.service.impl;
 
-import com.movilitzer.v2.dto.TrackDto;
-import com.movilitzer.v2.entity.*;
-import com.movilitzer.v2.exception.BadRequestException;
-import com.movilitzer.v2.exception.NotFoundException;
-import com.movilitzer.v2.mapper.TrackMapper;
-import com.movilitzer.v2.repository.*;
-import com.movilitzer.v2.service.SpotifyService;
+import com.jp.orpha.movilitzer_v2.dto.TrackDto;
+import com.jp.orpha.movilitzer_v2.entity.Venue;
+import com.jp.orpha.movilitzer_v2.entity.SpotifyLink;
+import com.jp.orpha.movilitzer_v2.entity.PlaylistSource;
+import com.jp.orpha.movilitzer_v2.entity.TrackSnapshot;
+import com.jp.orpha.movilitzer_v2.exception.BadRequestException;
+import com.jp.orpha.movilitzer_v2.exception.NotFoundException;
+import com.jp.orpha.movilitzer_v2.mapper.TrackMapper;
+import com.jp.orpha.movilitzer_v2.repository.VenueRepository;
+import com.jp.orpha.movilitzer_v2.repository.SpotifyLinkRepository;
+import com.jp.orpha.movilitzer_v2.repository.PlaylistSourceRepository;
+import com.jp.orpha.movilitzer_v2.repository.TrackSnapshotRepository;
+import com.jp.orpha.movilitzer_v2.service.SpotifyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;

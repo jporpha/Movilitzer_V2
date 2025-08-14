@@ -1,5 +1,6 @@
-package com.movilitzer.v2.service;
-import com.movilitzer.v2.dto.TrackDto;
+package com.jp.orpha.movilitzer_v2.service;
+
+import com.jp.orpha.movilitzer_v2.dto.TrackDto;
 import java.util.List;
 
 public interface SpotifyService {

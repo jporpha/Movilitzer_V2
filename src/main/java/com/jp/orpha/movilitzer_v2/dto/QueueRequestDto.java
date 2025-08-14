@@ -1,6 +1,8 @@
-package com.movilitzer.v2.dto;
+package com.jp.orpha.movilitzer_v2.dto;
+
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter; import lombok.Setter;
+import lombok.Getter;
+import lombok.Setter;
 @Getter @Setter
 public class QueueRequestDto {
     @NotBlank

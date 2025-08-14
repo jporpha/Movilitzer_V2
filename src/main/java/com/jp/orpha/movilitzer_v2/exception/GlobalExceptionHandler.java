@@ -1,4 +1,5 @@
-package com.movilitzer.v2.exception;
+package com.jp.orpha.movilitzer_v2.exception;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

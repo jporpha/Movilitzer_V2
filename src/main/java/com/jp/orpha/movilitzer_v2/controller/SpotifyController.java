@@ -1,12 +1,17 @@
-package com.movilitzer.v2.controller;
+package com.jp.orpha.movilitzer_v2.controller;
 
-import com.movilitzer.v2.dto.TrackDto;
-import com.movilitzer.v2.service.SpotifyService;
+import com.jp.orpha.movilitzer_v2.dto.TrackDto;
+import com.jp.orpha.movilitzer_v2.service.SpotifyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
 import java.util.List;
@@ -20,8 +25,8 @@ public class SpotifyController {
     private final SpotifyService spotifyService;
 
     @Operation(summary = "Iniciar autorización OAuth para un venue")
-    @PostMapping("/authorize/{venueId}")
-    public ResponseEntity<Void> authorize(@PathVariable Long venueId){
+    @GetMapping("/{venueId}/authorize")
+    public ResponseEntity<Void> authorize(@PathVariable("venueId") Long venueId){
         String url = spotifyService.buildAuthorizationUrl(venueId);
         return ResponseEntity.status(302).location(URI.create(url)).build();
     }
@@ -34,8 +39,8 @@ public class SpotifyController {
     }
 
     @Operation(summary = "Sincronizar tracks de la(s) playlist(s) activa(s) del venue")
-    @PostMapping("/sync/{venueId}")
-    public ResponseEntity<List<TrackDto>> sync(@PathVariable Long venueId){
+    @PostMapping("/{venueId}/sync")
+    public ResponseEntity<List<TrackDto>> sync(@PathVariable("venueId") Long venueId){
         return ResponseEntity.ok(spotifyService.syncPlaylistTracks(venueId));
     }
 }

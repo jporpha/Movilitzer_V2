@@ -1,15 +1,32 @@
-package com.movilitzer.v2.entity;
+package com.jp.orpha.movilitzer_v2.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor @Builder
+@Table(name = "votes")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Vote {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
@@ -20,8 +37,10 @@ public class Vote {
     @JoinColumn(name = "public_user_id")
     private PublicUser publicUser;
 
-    private Integer value; // +1
+    @Column(name = "score", nullable = false) // <- renombrado (antes "value")
+    private Integer score; // +1
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @PrePersist

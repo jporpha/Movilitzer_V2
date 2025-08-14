@@ -1,4 +1,5 @@
-package com.movilitzer.v2.config;
+package com.jp.orpha.movilitzer_v2.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

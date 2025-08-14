@@ -1,6 +1,7 @@
-package com.movilitzer.v2.mapper;
-import com.movilitzer.v2.dto.TrackDto;
-import com.movilitzer.v2.entity.TrackSnapshot;
+package com.jp.orpha.movilitzer_v2.mapper;
+
+import com.jp.orpha.movilitzer_v2.dto.TrackDto;
+import com.jp.orpha.movilitzer_v2.entity.TrackSnapshot;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import java.util.List;

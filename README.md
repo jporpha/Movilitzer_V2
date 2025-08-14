@@ -20,7 +20,7 @@ Incluye control de votos por usuario, manejo de colas, y sincronización con la 
 src
  ├─ main
  │   ├─ java
- │   │   └─ com.movilitzer.v2
+ │   │   └─ com.jp.orpha.movilitzer_v2
  │   │       ├─ controller     # Controladores REST
  │   │       ├─ service        # Lógica de negocio
  │   │       ├─ repository     # Acceso a datos
