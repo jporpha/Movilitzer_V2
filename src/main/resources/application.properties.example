@@ -1,0 +1,24 @@
+# --- Spring ---
+server.port=8080
+
+spring.datasource.url=jdbc:h2:mem:movilitzer;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update
+spring.h2.console.enabled=true
+
+logging.level.root=INFO
+logging.level.org.springframework.security=WARN
+logging.level.com.movilitzer.v2=DEBUG
+
+# --- Movilitzer ---
+movilitzer.security.public-access-code-ttl-minutes=60
+
+# Redirect URI con loopback IPv4 (no usar localhost)
+movilitzer.spotify.redirect-uri=http://127.0.0.1:8080/api/v1/spotify/callback?venueId=1
+movilitzer.spotify.scopes=user-modify-playback-state,user-read-playback-state,playlist-read-private,playlist-read-collaborative
+
+# Reemplazar en local o exportar como variables de entorno
+movilitzer.spotify.client-id=${SPOTIFY_CLIENT_ID:CHANGE_ME}
+movilitzer.spotify.client-secret=${SPOTIFY_CLIENT_SECRET:CHANGE_ME}

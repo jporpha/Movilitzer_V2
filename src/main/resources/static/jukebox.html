@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movilitzer v2 — Jukebox</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial; }
+    body { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 12px; }
+    input, button { padding:10px; border-radius:10px; border:1px solid #d1d5db; }
+    button { background:#111827; color:white; border:0; cursor:pointer; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+    .card { display:flex; gap:12px; padding:10px; border:1px solid #e5e7eb; border-radius:14px; align-items:center; }
+    .thumb { width:64px; height:64px; border-radius:8px; background:#f3f4f6; object-fit:cover; }
+    .meta { flex:1; }
+    .title { font-weight:700; }
+    .artist { color:#6b7280; font-size: 14px; }
+    .muted { color:#6b7280; font-size:12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <strong>Movilitzer v2 — Jukebox</strong>
+      <div class="muted">Ingresa el <em>accessCode</em> del local y el <em>venueId</em> para encolar.</div>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <input id="accessCode" placeholder="ABC123" style="width:120px"/>
+      <input id="venueId" placeholder="1" style="width:80px"/>
+      <button id="loadBtn">Cargar</button>
+    </div>
+  </header>
+
+  <section class="grid" id="list"></section>
+
+  <script>
+    const baseUrl = location.origin;
+    const $ = (s) => document.querySelector(s);
+    const list = $('#list');
+
+    async function loadTracks() {
+      const code = $('#accessCode').value.trim();
+      if (!code) return alert('Ingrese accessCode');
+      list.innerHTML = '<div class="muted">Cargando...</div>';
+      try {
+        const res = await fetch(`${baseUrl}/api/v1/public/venues/${code}/tracks`);
+        const data = await res.json();
+        renderTracks(data || []);
+      } catch (e) {
+        list.innerHTML = '<div class="muted">Error al cargar canciones</div>';
+      }
+    }
+
+    function renderTracks(tracks) {
+      if (!Array.isArray(tracks) || tracks.length === 0) {
+        list.innerHTML = '<div class="muted">No hay canciones disponibles.</div>';
+        return;
+      }
+      list.innerHTML = '';
+      for (const t of tracks) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = t.imageUrl || '';
+        img.alt = t.name || 'cover';
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        const title = document.createElement('div');
+        title.className = 'title';
+        title.textContent = t.name || '';
+        const artist = document.createElement('div');
+        artist.className = 'artist';
+        artist.textContent = t.artistNames || '';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Encolar';
+        btn.onclick = () => enqueue(t.spotifyUri);
+
+        meta.appendChild(title);
+        meta.appendChild(artist);
+        card.appendChild(img);
+        card.appendChild(meta);
+        card.appendChild(btn);
+        list.appendChild(card);
+      }
+    }
+
+    async function enqueue(uri) {
+      const venueId = $('#venueId').value.trim();
+      if (!venueId) return alert('Ingrese venueId');
+      const body = { spotifyUri: uri, publicUserEmail: '' };
+      try {
+        const res = await fetch(`${baseUrl}/api/v1/public/venues/${venueId}/queue`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (res.ok) {
+          alert('🎶 Canción encolada!');
+        } else {
+          const text = await res.text();
+          alert('Error al encolar: ' + text);
+        }
+      } catch (e) {
+        alert('Error de red al encolar');
+      }
+    }
+
+    document.getElementById('loadBtn').addEventListener('click', loadTracks);
+  </script>
+</body>
+</html>

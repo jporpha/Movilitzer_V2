@@ -1,0 +1,7 @@
+-- Crea un venue y una playlist de prueba (ajustar IDs según tu cuenta).
+INSERT INTO venue (id, name, access_code, timezone, status, created_at) VALUES
+(1, 'Mi Primer Local', 'ABC123', 'America/Santiago', 'ACTIVE', CURRENT_TIMESTAMP);
+
+-- Reemplaza 37i9dQZF1DXcBWIGoYBM5M por una playlist real que tengas visible
+INSERT INTO playlist_source (id, venue_id, provider, playlist_id, display_name, active) VALUES
+(1, 1, 'SPOTIFY', '37i9dQZF1DXcBWIGoYBM5M', 'Playlist de prueba', true);

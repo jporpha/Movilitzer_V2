@@ -56,3 +56,4 @@ spring.log
 
 # Configuración sensible
 src/main/resources/application.properties
+src/main/resources/data.sql
